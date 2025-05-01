@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.SmartControlApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">#26A69A</item>
+        <item name="colorPrimaryVariant">#00796B</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#26A69A</item>
+        <item name="colorSecondaryVariant">#00796B</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:statusBarColor">#121212</item>
+    </style>
+</resources>

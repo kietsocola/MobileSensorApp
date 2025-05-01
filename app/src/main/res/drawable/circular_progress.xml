@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background ring (matches circular_background) -->
+    <item>
+        <shape
+            android:shape="ring"
+            android:thickness="8dp">
+            <solid android:color="#1E1E1E" />
+        </shape>
+    </item>
+    <!-- Progress ring with gradient and glow -->
+    <item>
+        <shape
+            android:shape="ring"
+            android:thickness="8dp">
+            <gradient
+                android:startColor="#26A69A"
+                android:centerColor="#4DD0E1"
+                android:endColor="#26A69A"
+                android:type="sweep"
+                android:gradientRadius="100dp" />
+            <!-- Simulate glow with outer stroke -->
+            <stroke
+                android:width="3dp"
+                android:color="#80FFFFFF" />
+        </shape>
+    </item>
+</layer-list>
