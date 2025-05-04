@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         features.add(new Feature("Hand Wave Light", R.drawable.ic_hand_wave, HandWaveActivity.class));
         features.add(new Feature("Volume Tilt", R.drawable.ic_volume, VolumeTiltActivity.class));
         features.add(new Feature("Song Switch", R.drawable.ic_music, SongSwitchActivity.class));
-        features.add(new Feature("Bluetooth Speaker", R.drawable.ic_bluetooth, BluetoothSpeakerActivity.class));
+        features.add(new Feature("Wifi TV", R.drawable.ic_bluetooth, BluetoothSpeakerActivity.class));
         features.add(new Feature("Voice Control", R.drawable.ic_mic, VoiceControlActivity.class));
 
         FeatureAdapter adapter = new FeatureAdapter(features, (feature, view) -> {

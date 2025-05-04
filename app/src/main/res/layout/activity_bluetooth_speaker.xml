@@ -1,64 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#121212">
+    android:background="#121212"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bluetooth Speaker Control"
-        android:textColor="#26A69A"
-        android:textSize="20sp"
-        android:layout_margin="16dp"
+    <!-- Power Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/powerButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/btStatusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disconnected"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:icon="@drawable/ic_power"
+        app:cornerRadius="40dp"
+        app:backgroundTint="#FF5252"
+        app:elevation="8dp"/>
 
-    <Button
-        android:id="@+id/connectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect"
-        android:backgroundTint="#26A69A"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btStatusText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <!-- Volume Up Button -->
 
-    <Button
-        android:id="@+id/playPauseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play/Pause"
-        android:backgroundTint="#26A69A"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/connectButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <!-- Mute Button -->
 
-    <Button
-        android:id="@+id/skipButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Skip"
-        android:backgroundTint="#26A69A"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/playPauseButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <!-- Volume Down Button -->
+
+    <!-- Channel Up Button -->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/volumeUpButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        app:backgroundTint="#4CAF50"
+        app:cornerRadius="30dp"
+        app:elevation="6dp"
+        app:icon="@drawable/ic_volume_up"
+        app:layout_constraintEnd_toStartOf="@id/muteButton"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/powerButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/muteButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="220dp"
+        app:backgroundTint="#FFC107"
+        app:cornerRadius="30dp"
+        app:elevation="6dp"
+        app:icon="@drawable/ic_mute"
+        app:layout_constraintEnd_toStartOf="@id/volumeDownButton"
+        app:layout_constraintStart_toEndOf="@id/volumeUpButton"
+        app:layout_constraintTop_toBottomOf="@id/powerButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/volumeDownButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="44dp"
+        app:backgroundTint="#4CAF50"
+        app:cornerRadius="30dp"
+        app:elevation="6dp"
+        app:icon="@drawable/ic_volume_down"
+        app:layout_constraintStart_toEndOf="@id/muteButton"
+        app:layout_constraintTop_toBottomOf="@id/powerButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/channelUpButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/volumeUpButton"
+        app:layout_constraintEnd_toStartOf="@id/homeButton"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:icon="@drawable/ic_channel_up"
+        app:cornerRadius="30dp"
+        app:backgroundTint="#2196F3"
+        app:elevation="6dp"/>
+
+    <!-- Home Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/homeButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/muteButton"
+        app:layout_constraintStart_toEndOf="@id/channelUpButton"
+        app:layout_constraintEnd_toStartOf="@id/channelDownButton"
+        app:icon="@drawable/ic_home"
+        app:cornerRadius="30dp"
+        app:backgroundTint="#FF9800"
+        app:elevation="6dp"/>
+
+    <!-- Channel Down Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/channelDownButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="28dp"
+        app:backgroundTint="#2196F3"
+        app:cornerRadius="30dp"
+        app:elevation="6dp"
+        app:icon="@drawable/ic_channel_down"
+        app:layout_constraintStart_toEndOf="@id/homeButton"
+        app:layout_constraintTop_toBottomOf="@id/volumeDownButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

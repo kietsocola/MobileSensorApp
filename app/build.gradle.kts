@@ -47,6 +47,7 @@ dependencies {
     implementation("androidx.camera:camera-view:1.2.3")
     implementation("com.google.guava:guava:31.1-android")
     implementation("com.google.mediapipe:tasks-vision:0.10.0")
+    implementation("com.google.android.material:material:1.9.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

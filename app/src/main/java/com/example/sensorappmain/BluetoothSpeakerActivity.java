@@ -1,91 +1,68 @@
 package com.example.sensorappmain;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class BluetoothSpeakerActivity extends AppCompatActivity {
-    private static final int REQUEST_ENABLE_BT = 1;
-    private BluetoothAdapter bluetoothAdapter;
-    private MediaPlayer mediaPlayer;
-    private TextView btStatusText;
+
+    private static final String SERVER_IP = "192.168.1.2"; // Thay bằng IP của máy tính chạy server
+    private static final int SERVER_PORT = 12345; // Cổng server
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_speaker);
 
-        btStatusText = findViewById(R.id.btStatusText);
-        Button connectButton = findViewById(R.id.connectButton);
-        Button playPauseButton = findViewById(R.id.playPauseButton);
-        Button skipButton = findViewById(R.id.skipButton);
+        Button powerButton = findViewById(R.id.powerButton);
+        Button volumeUpButton = findViewById(R.id.volumeUpButton);
+        Button volumeDownButton = findViewById(R.id.volumeDownButton);
+        Button muteButton = findViewById(R.id.muteButton);
+        Button channelUpButton = findViewById(R.id.channelUpButton);
+        Button channelDownButton = findViewById(R.id.channelDownButton);
+        Button homeButton = findViewById(R.id.homeButton);
 
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mediaPlayer = MediaPlayer.create(this, R.raw.song1);
+        powerButton.setOnClickListener(v -> sendCommand("POWER"));
+        volumeUpButton.setOnClickListener(v -> sendCommand("VOL_UP"));
+        volumeDownButton.setOnClickListener(v -> sendCommand("VOL_DOWN"));
+        muteButton.setOnClickListener(v -> sendCommand("MUTE"));
+        channelUpButton.setOnClickListener(v -> sendCommand("CHANNEL_UP"));
+        channelDownButton.setOnClickListener(v -> sendCommand("CHANNEL_DOWN"));
+        homeButton.setOnClickListener(v -> sendCommand("HOME"));
+    }
 
-        connectButton.setOnClickListener(v -> connectBluetooth());
-        playPauseButton.setOnClickListener(v -> {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-                btStatusText.setText("Paused");
-            } else {
-                mediaPlayer.start();
-                btStatusText.setText("Playing");
+    private void sendCommand(String command) {
+        new SocketTask().execute(command);
+    }
+
+    private class SocketTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String command = params[0];
+            try (Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                out.println(command); // Gửi lệnh
+                return in.readLine(); // Nhận phản hồi từ server
+
+            } catch (IOException e) {
+                android.util.Log.e("SocketTask", "Error connecting to " + SERVER_IP + ":" + SERVER_PORT, e);
+                return "Error: " + e.getMessage();
             }
-        });
-        skipButton.setOnClickListener(v -> {
-            mediaPlayer.stop();
-            mediaPlayer = MediaPlayer.create(this, R.raw.song2);
-            mediaPlayer.start();
-            btStatusText.setText("Playing Next Song");
-        });
-    }
-
-    private void connectBluetooth() {
-        if (bluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_SHORT).show();
-            return;
         }
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        } else {
-            // Simulate connection to a paired device
-            btStatusText.setText("Connected to Speaker");
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
-            btStatusText.setText("Connected to Speaker");
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(BluetoothSpeakerActivity.this, result, Toast.LENGTH_SHORT).show();
         }
     }
 }
