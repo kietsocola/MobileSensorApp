@@ -192,7 +192,7 @@ public class HandWaveActivity extends AppCompatActivity {
 
         // Get wrist landmark (index 0)
         List<NormalizedLandmark> landmarks = result.landmarks().get(0);
-        float wristX = landmarks.get(0).x();
+        float wristX = landmarks.get(0).y();
         Log.d(TAG, "Hand detected, wrist x-coordinate: " + wristX);
 
         // Detect waving gesture

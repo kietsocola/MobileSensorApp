@@ -14,7 +14,7 @@ import java.net.Socket;
 
 public class BluetoothSpeakerActivity extends AppCompatActivity {
 
-    private static final String SERVER_IP = "192.168.1.2"; // Thay bằng IP của máy tính chạy server
+    private static final String SERVER_IP = "192.168.31.145"; // Thay bằng IP của máy tính chạy server
     private static final int SERVER_PORT = 12345; // Cổng server
 
     @Override
